@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" value="#{@systemProperties}"/>
+        <property name="targetMethod" value="putAll"/>
+        <property name="arguments">
+            <props>
+                <prop key="rpcPort">12345</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="hello" class="com.wjw.rpc.demo.impl.HelloImpl">
+    </bean>
+
+    <bean class="com.wjw.rpc.core.BootStrap">
+        <constructor-arg name="serviceUri" value="/service/rpc-demo2"/>
+        <constructor-arg name="interfaceName" value="com.wjw.rpc.demo.Hello"/>
+        <constructor-arg name="instance" ref="hello"/>
+<!--        <property name="serviceUri" value="/service/rpc-demo"/>-->
+<!--        <property name="interface" value="com.wjw.rpc.demo.Hello"/>-->
+<!--        <property name="instance" ref="hello"/>-->
+    </bean>
+
+</beans>
